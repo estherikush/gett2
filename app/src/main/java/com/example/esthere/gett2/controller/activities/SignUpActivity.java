@@ -10,10 +10,14 @@ import android.widget.EditText;
 import com.example.esthere.gett2.R;
 import com.example.esthere.gett2.model.datasource.Globals;
 import com.example.esthere.gett2.model.entities.Driver;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class SignUpActivity extends Activity {
 
     EditText fName, lName, id, phone, email, creditCard, password;
+
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +30,24 @@ public class SignUpActivity extends Activity {
         email=findViewById(R.id.email);
         creditCard=findViewById(R.id.creditCard);
         password=findViewById(R.id.password);
+
+        //mAuth = FirebaseAuth.getInstance();
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        //TODO: Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        //TODO: updateUI(currentUser);
     }
 
+
+
     public void signupClicked(View view) {
+
+
+
+
         String fNameText=fName.getText().toString();
         String lNameText=lName.getText().toString();
         String idText=id.getText().toString();
