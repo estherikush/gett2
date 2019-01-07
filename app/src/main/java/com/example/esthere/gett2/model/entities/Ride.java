@@ -20,9 +20,12 @@ public class Ride {
     private boolean arrivingOrLeaving;
     private Date realLeavingTime;
     private Date realArrivingTime;
-    private String name;
+   private String name;
     private String phone;
     private String email;
+
+
+
     private String driverId;
     //constructors
     public Ride(){}
@@ -136,4 +139,8 @@ public class Ride {
         this.email = email;
     }
 
+    public Customer getCustomer()
+    {
+        return new Customer(name,email,phone);
+    }
 }
