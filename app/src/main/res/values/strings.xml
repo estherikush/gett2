@@ -20,5 +20,8 @@
     <string name="claim">Claim</string>
     <string name="tel">phone number</string>
     <string name="name">name</string>
+    <string name="WRONG_USER_PASSWORD">wrong password</string>
+    <string name="FIREBASE">Firebase</string>
+    <string name="BUTTON_CLOSE">Close</string>
 
 </resources>

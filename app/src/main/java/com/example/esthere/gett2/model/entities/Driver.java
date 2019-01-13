@@ -18,7 +18,11 @@ public class Driver {
         this.creditCard = creditCard;
         this.password=password;
     }
-
+    public Driver(){}
+    public Driver(String email, String password) {
+        this.email = email;
+        this.password=password;
+    }
     //getters & setters
 
     public String getPassword() {
@@ -75,5 +79,12 @@ public class Driver {
 
     public void setCreditCard(String creditCard) {
         this.creditCard = creditCard;
+    }
+
+    public String getKey() {
+        String key = this.email;
+        key = key.replace("@","_");
+        key = key.replace(".","__");
+        return key;
     }
 }

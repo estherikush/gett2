@@ -32,7 +32,8 @@ public class FireBase implements IBackend {
 
     @Override
     public void addDriver(Driver driver) {
-        drivers.child(driver.getEmail()).setValue(driver);
+        //drivers.child(driver.getEmail()).setValue(driver);
+        drivers.child(driver.getKey()).setValue(driver);
         return;
     }
 
@@ -94,6 +95,26 @@ public class FireBase implements IBackend {
 //                action.onFailure(databaseError.toException());
 //            }
 //        });
+        drivers.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                String key = driver.getKey();
+                if (snapshot.hasChild(key)) {
+                    Driver d = snapshot.child(key).getValue(Driver.class);
+                    if (d.getPassword().equals(driver.getPassword())){
+                        Globals.driver = d;
+                        action.onSuccess(true);
+                    } else
+                        action.onSuccess(false);
+                } else {
+                    action.onSuccess(false);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                action.onFailure(databaseError.toException());
+            }
+        });
 
 
     }

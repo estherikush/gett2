@@ -25,7 +25,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="215dp"
+            android:layout_height="449dp"
             android:gravity="top|center_horizontal"
             android:orientation="vertical">
 
@@ -56,6 +56,24 @@
                 android:onClick="buttonClicked"
                 android:text="Login"
                 android:textSize="18sp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="172dp" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="340dp"
+                android:layout_height="wrap_content"
+                android:text="             if you don't have an acount please click here"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/buttonSignup"
+                android:layout_width="340dp"
+                android:layout_height="wrap_content"
+                android:onClick="signupClicked"
+                android:text="SIGNUP" />
 
         </LinearLayout>
     </LinearLayout>
