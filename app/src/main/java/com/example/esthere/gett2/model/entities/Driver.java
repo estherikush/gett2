@@ -18,11 +18,15 @@ public class Driver {
         this.creditCard = creditCard;
         this.password=password;
     }
-    public Driver(){}
+
+    public Driver() {
+    }
+
     public Driver(String email, String password) {
         this.email = email;
         this.password=password;
     }
+
     //getters & setters
 
     public String getPassword() {

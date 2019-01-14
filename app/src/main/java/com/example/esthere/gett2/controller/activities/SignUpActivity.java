@@ -17,8 +17,6 @@ public class SignUpActivity extends Activity {
 
     EditText fName, lName, id, phone, email, creditCard, password;
 
-    private FirebaseAuth mAuth;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,24 +28,9 @@ public class SignUpActivity extends Activity {
         email=findViewById(R.id.email);
         creditCard=findViewById(R.id.creditCard);
         password=findViewById(R.id.password);
-
-        //mAuth = FirebaseAuth.getInstance();
     }
-    @Override
-    public void onStart() {
-        super.onStart();
-        //TODO: Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        //TODO: updateUI(currentUser);
-    }
-
-
 
     public void signupClicked(View view) {
-
-
-
-
         String fNameText=fName.getText().toString();
         String lNameText=lName.getText().toString();
         String idText=id.getText().toString();
@@ -58,7 +41,7 @@ public class SignUpActivity extends Activity {
         Driver driver1=new Driver(fNameText,lNameText,idText,phoneText,emailText,creditCardText,passwordText);
         Globals.backend.addDriver(driver1);
 
-        Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+        Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
         startActivity(intent);
     }
 }

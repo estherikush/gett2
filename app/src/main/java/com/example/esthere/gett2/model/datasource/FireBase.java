@@ -32,9 +32,14 @@ public class FireBase implements IBackend {
 
     @Override
     public void addDriver(Driver driver) {
-        //drivers.child(driver.getEmail()).setValue(driver);
+//        drivers.child(driver.getEmail()).setValue(driver);
+//        return;
+
         drivers.child(driver.getKey()).setValue(driver);
         return;
+
+//        drivers.push().setValue(driver);
+//        return;
     }
 
     @Override
@@ -75,26 +80,6 @@ public class FireBase implements IBackend {
 
     @Override
     public void Authenticate(final Driver driver, final IAction<Boolean> action) {
-//        drivers.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot snapshot) {
-//                //String key = driver.getKey();
-//                if (snapshot.hasChild(key)) {
-//                    Driver d = snapshot.child(key).getValue(Driver.class);
-//                    if (d.getPassword().equals(driver.getPassword())){
-//                        Globals.driver = d;
-//                        action.onSuccess(true);
-//                    } else
-//                        action.onSuccess(false);
-//                } else {
-//                    action.onSuccess(false);
-//                }
-//            }
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//                action.onFailure(databaseError.toException());
-//            }
-//        });
         drivers.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -115,8 +100,6 @@ public class FireBase implements IBackend {
                 action.onFailure(databaseError.toException());
             }
         });
-
-
     }
 
     @Override
@@ -130,7 +113,7 @@ public class FireBase implements IBackend {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 ArrayList<Ride> results = new ArrayList<>();
-                for (DataSnapshot item: snapshot.getChildren()) {
+                for (DataSnapshot item : snapshot.getChildren()) {
                     Ride travel = item.getValue(Ride.class);
                     if (travel.getStatus().equals(Ride.Status.AVAILABLE))
                         results.add(travel);
@@ -151,12 +134,12 @@ public class FireBase implements IBackend {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 ArrayList<Ride> results = new ArrayList<>();
-//                for (DataSnapshot item: snapshot.getChildren()) {
-//                    Ride travel = item.getValue(Ride.class);
-//                    if (travel.getDriverId() != null )
-//                        if (travel.getDriverId().equals(driver.getEmail()) && travel.getStatus().equals(Travel.Status.InProgress) )
-//                            results.add(travel);
-//                }
+                for (DataSnapshot item: snapshot.getChildren()) {
+                    Ride travel = item.getValue(Ride.class);
+                    if (travel.getDriverId() != null )
+                        if (travel.getDriverId().equals(driver.getEmail()))
+                            results.add(travel);
+                }
 
                 action.onSuccess(results);
             }
@@ -169,20 +152,21 @@ public class FireBase implements IBackend {
     }
 
     @Override
-    public void Claim(final String key,final String email, final IAction<Boolean> action) {
+    public void Claim(final String key, final String emailDriver, final IAction<Boolean> action) {
         rides.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-//                if (snapshot.hasChild(key)) {
-//                    Ride ride = snapshot.child(key).getValue(Ride.class);
-//                    ride.setDriverId(email);
-//                    ride.setStatus(Ride.Status.InProgress);
-//                    ride.child(key).setValue(ride);
-//                    action.onSuccess(true);
-//                } else {
-//                    action.onSuccess(false);
-//                }
+                if (snapshot.hasChild(key)) {
+                    Ride ride = snapshot.child(key).getValue(Ride.class);
+                    ride.setDriverId(emailDriver);
+                    ride.setStatus(Ride.Status.BUSY);
+                    rides.child(key).setValue(ride);
+                    action.onSuccess(true);
+                } else {
+                    action.onSuccess(false);
+                }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 action.onFailure(databaseError.toException());
@@ -195,15 +179,16 @@ public class FireBase implements IBackend {
         rides.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-//                if (snapshot.hasChild(key)) {
-//                    Ride travel = snapshot.child(key).getValue(Travel.class);
-//                    travel.setStatus(Travel.Status.Finished);
-//                    rides.child(key).setValue(travel);
-//                    action.onSuccess(true);
-//                } else {
-//                    action.onSuccess(false);
-//                }
+                if (snapshot.hasChild(key)) {
+                    Ride travel = snapshot.child(key).getValue(Ride.class);
+                    travel.setStatus(Ride.Status.FINISHED);
+                    rides.child(key).setValue(travel);
+                    action.onSuccess(true);
+                } else {
+                    action.onSuccess(false);
+                }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 action.onFailure(databaseError.toException());

@@ -7,35 +7,34 @@ import java.sql.Date;
 import java.sql.Time;
 
 public class Ride {
-        public enum  Status {
+    public enum  Status {
         AVAILABLE,
         BUSY,
         FINISHED
     }
-    private Location targetLocation;
-    private Location sourceLocation;
+    private myLocation targetLocation;
+    private myLocation sourceLocation;
     //private Integer status;
     private Status status;
     private Date timeRide;
     private boolean arrivingOrLeaving;
     private Date realLeavingTime;
     private Date realArrivingTime;
-   private String name;
+    private String name;
     private String phone;
     private String email;
-
-
-
     private String driverId;
+    private String key;
+
     //constructors
     public Ride(){}
-    public Ride(Location targetLocation, Location sourceLocation, Status status) {
+    public Ride(myLocation targetLocation, myLocation sourceLocation, Status status) {
         this.targetLocation = targetLocation;
         this.sourceLocation = sourceLocation;
         this.status = status;
     }
 
-    public Ride(Location targetLocation, Location sourceLocation, Status status, Date timeRide, boolean arrivingOrLeaving, Date realLeavingTime, Date realArrivingTime, String name, String phone, String email) {
+    public Ride(myLocation targetLocation, myLocation sourceLocation, Status status, Date timeRide, boolean arrivingOrLeaving, Date realLeavingTime, Date realArrivingTime, String name, String phone, String email) {
         this.targetLocation = targetLocation;
         this.sourceLocation = sourceLocation;
         this.status = status;
@@ -49,6 +48,14 @@ public class Ride {
     }
 
     //getters &setters
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
 
     public void setStatus(Status status) {
         this.status = status;
@@ -90,7 +97,7 @@ public class Ride {
         return targetLocation;
     }
 
-    public void setTargetLocation(Location targetLocation) {
+    public void setTargetLocation(myLocation targetLocation) {
         this.targetLocation = targetLocation;
     }
 
@@ -98,7 +105,7 @@ public class Ride {
         return sourceLocation;
     }
 
-    public void setSourceLocation(Location sourceLocation) {
+    public void setSourceLocation(myLocation sourceLocation) {
         this.sourceLocation = sourceLocation;
     }
 

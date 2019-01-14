@@ -29,12 +29,13 @@ public class MainActivity extends Activity
         AvaliableRides
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
+        // setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -107,10 +108,6 @@ public class MainActivity extends Activity
 //
 //        }
 //
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        drawer.closeDrawer(GravityCompat.START);
-//        return true;
-
         int id = item.getItemId();
         switch (id) {
             case R.id.nav_avaliable_rides:
@@ -121,17 +118,18 @@ public class MainActivity extends Activity
                 break;
             case R.id.nav_logout:
                 finish();
-        }
 
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
+
     public void showFragment(FragmentType fragmentType) {
         Fragment fragment = null;
         FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();//getFragmentManager().beginTransaction();
         switch (fragmentType) {
             case MyRides:
                 fragment = new MyRides();

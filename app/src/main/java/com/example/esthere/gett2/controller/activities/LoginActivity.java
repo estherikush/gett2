@@ -14,14 +14,19 @@ import com.example.esthere.gett2.model.entities.Driver;
 import com.example.esthere.gett2.utils.Dialogs;
 import com.example.esthere.gett2.utils.SharedPref;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends AppCompatActivity {
 
     EditText email,password;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        email=findViewById(R.id.email);
+        password=findViewById(R.id.password);
+        email.setText(SharedPref.getPreference(LoginActivity.this,"email"));
     }
+
 
     public void buttonClicked(View view) {
         SharedPref.savePreference(LoginActivity.this,"email",email.getText().toString());
@@ -34,8 +39,8 @@ public class LoginActivity extends Activity {
                     return;
                 }
                 else {
-                    Globals.driver = new Driver();
-                    Globals.driver.setEmail(email.getText().toString());
+                    //Globals.driver = new Driver();
+                    //Globals.driver.setEmail(email.getText().toString());
                     finish();
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
@@ -47,9 +52,12 @@ public class LoginActivity extends Activity {
                 Dialogs.Dialog(LoginActivity.this,getString(R.string.FIREBASE),ex.getMessage(),getString(R.string.BUTTON_CLOSE));
             }
         });
+
     }
+
     public void signupClicked(View view) {
         Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
         startActivity(intent);
     }
+
 }
