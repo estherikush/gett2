@@ -23,5 +23,7 @@
     <string name="WRONG_USER_PASSWORD">wrong password</string>
     <string name="FIREBASE">Firebase</string>
     <string name="BUTTON_CLOSE">Close</string>
+    <string name="addContact">ADD TO CONTACTS</string>
+    <string name="CLAIMED">You took the ride</string>
 
 </resources>

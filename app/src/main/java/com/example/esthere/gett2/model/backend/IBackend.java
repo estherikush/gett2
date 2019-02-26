@@ -21,4 +21,5 @@ public interface IBackend {
     void myFinishedRides(Driver driver,IAction<ArrayList<Ride>> action);
     void Claim(String key,String driverId,IAction<Boolean> action);
     void UnClaim(String key,IAction<Boolean> action);
+    //void addContact(String key, IAction<Boolean> action);
 }
