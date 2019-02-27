@@ -1,6 +1,7 @@
 package com.example.esthere.gett2.controller.fragments;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -18,6 +19,7 @@ import com.example.esthere.gett2.R;
 import com.example.esthere.gett2.model.backend.IAction;
 import com.example.esthere.gett2.model.datasource.Globals;
 import com.example.esthere.gett2.model.entities.Ride;
+import com.example.esthere.gett2.utils.ContentProvider;
 import com.example.esthere.gett2.utils.ManageLocation;
 
 import java.util.ArrayList;
@@ -53,16 +55,20 @@ public class MyRides extends Fragment {
                         if (convertView == null)
                             convertView = View.inflate(getActivity(),R.layout.ride,null);
 
-                        EditText email = (EditText) convertView.findViewById(R.id.email);
-                        EditText name = (EditText) convertView.findViewById(R.id.name);
-                        EditText tel = (EditText) convertView.findViewById(R.id.tel);
+                        final EditText email = (EditText) convertView.findViewById(R.id.email);
+                        final EditText name = (EditText) convertView.findViewById(R.id.name);
+                        final EditText tel = (EditText) convertView.findViewById(R.id.tel);
                         EditText source = (EditText) convertView.findViewById(R.id.source);
                         EditText target = (EditText) convertView.findViewById(R.id.target);
 
                         Button claim = (Button) convertView.findViewById(R.id.claim);
                         Button unclaim = (Button) convertView.findViewById(R.id.unclaim);
+                        final Button addToContant = (Button) convertView.findViewById(R.id.addContact);
 
                         unclaim.setTag(rides.get(position).getKey());
+                        if(rides.get(position).getStatus().equals(Ride.Status.FINISHED)) {
+                            unclaim.setVisibility(View.GONE);
+                        }
                         unclaim.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -80,10 +86,16 @@ public class MyRides extends Fragment {
                                         return;
                                     }
                                 });
-
                             }
                         });
-
+                        addToContant.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                ContentProvider.addContact(getActivity(), name.getText().toString(), tel.getText().toString(), email.getText().toString());
+                                addToContant.setEnabled(false);
+                                //addToContant.setBackgroundColor(Color.rgb(211,211,211));
+                            }
+                        });
                         claim.setVisibility(View.GONE);
 
                         email.setText(rides.get(position).getEmail());
@@ -91,24 +103,15 @@ public class MyRides extends Fragment {
                         tel.setText(rides.get(position).getPhone());
                         source.setText(ManageLocation.addressFromLongLat(rides.get(position).getSourceLocation(), getActivity()));
                         target.setText(ManageLocation.addressFromLongLat(rides.get(position).getTargetLocation(), getActivity()));
-
-
-
                         return convertView;
                     }
                 };
 
                 listMyRides.setAdapter(adapter);
-
             }
             @Override
-            public void onFailure(Exception exception) {
-
-            }
+            public void onFailure(Exception exception) { }
         });
-
         return  view;
     }
-
-
 }

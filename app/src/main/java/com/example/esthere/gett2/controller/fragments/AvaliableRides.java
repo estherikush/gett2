@@ -1,10 +1,12 @@
 package com.example.esthere.gett2.controller.fragments;
 
+import android.app.Activity;
 import android.content.ContentProviderResult;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.OperationApplicationException;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -51,6 +53,7 @@ import com.example.esthere.gett2.model.backend.IAction;
 import com.example.esthere.gett2.model.datasource.Globals;
 import com.example.esthere.gett2.model.entities.Driver;
 import com.example.esthere.gett2.model.entities.Ride;
+import com.example.esthere.gett2.utils.ContentProvider;
 import com.example.esthere.gett2.utils.Dialogs;
 import com.example.esthere.gett2.utils.ManageLocation;
 
@@ -90,10 +93,10 @@ public class AvaliableRides extends Fragment {
                                     final EditText email = (EditText) convertView.findViewById(R.id.email);
                                     EditText source = (EditText) convertView.findViewById(R.id.source);
                                     EditText target = (EditText) convertView.findViewById(R.id.target);
-                                    Button claim = (Button) convertView.findViewById(R.id.claim);
+                                    final Button claim = (Button) convertView.findViewById(R.id.claim);
                                     Button unclaim = (Button) convertView.findViewById(R.id.unclaim);
                                     //!!!!!!!!!!!!!!!!!!!
-                                    Button addToContant = (Button) convertView.findViewById(R.id.addContact);
+                                    final Button addToContant = (Button) convertView.findViewById(R.id.addContact);
                                     EditText start = (EditText) convertView.findViewById(R.id.start);
                                     if (rides.size() > 0) {
                                         claim.setTag(rides.get(position).getKey());
@@ -106,6 +109,7 @@ public class AvaliableRides extends Fragment {
                                                     @Override
                                                     public void onSuccess(Boolean obj) {
                                                         Dialogs.Dialog(getActivity(), getString(R.string.FIREBASE), getString(R.string.CLAIMED), getString(R.string.BUTTON_CLOSE));
+                                                        claim.setEnabled(false);
                                                         return;
                                                     }
 
@@ -118,34 +122,13 @@ public class AvaliableRides extends Fragment {
 
                                             }
                                         });
-                                        addToContant.setTag(rides.get(position).getKey());
+
                                         addToContant.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View view) {
-                                                addContact(name.getText().toString(), tel.getText().toString(), email.getText().toString());
-//                                                try {
-//                                                    SaveContact(name.getText().toString(), tel.getText().toString(), email.getText().toString());
-//                                                } catch (OperationApplicationException e) {
-//                                                    e.printStackTrace();
-//                                                } catch (RemoteException e) {
-//                                                    e.printStackTrace();
-//                                                }
-                                                //String key = (String) ((Button) view).getTag();
-
-                                                //-- Add New Contact using Content Provider
-//                                                ContentValues values = new ContentValues();
-//                                                values.put(ContactsContract.Data.RAW_CONTACT_ID, 001);
-//                                                values.put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE);
-//                                                values.put(ContactsContract.CommonDataKinds.Phone.NUMBER, tel.toString());
-//                                                values.put(ContactsContract.CommonDataKinds.Phone.TYPE, ContactsContract.CommonDataKinds.Phone.TYPE_CUSTOM);
-//                                                values.put(ContactsContract.CommonDataKinds.Phone.LABEL, "Nirav");
-//                                                Uri dataUri = getActivity().getContentResolver().insert(android.provider.ContactsContract.Data.CONTENT_URI, values);
-//
-//                                                // Inser an empty contact.
-//                                                ContentValues contentValues = new ContentValues();
-//                                                Uri rawContactUri = getActivity().getContentResolver().insert(ContactsContract.RawContacts.CONTENT_URI, contentValues);
-//// Get the newly created contact raw id.
-//                                                long ret = ContentUris.parseId(rawContactUri);
+                                                ContentProvider.addContact(getActivity(), name.getText().toString(), tel.getText().toString(), email.getText().toString());
+                                                addToContant.setEnabled(false);
+                                                //addToContant.setBackgroundColor(Color.rgb(211,211,211));
                                             }
                                         });
 
@@ -255,104 +238,4 @@ public class AvaliableRides extends Fragment {
 //        }
 
     }
-    public void addContact(String name, String tel, String mail)
-    {
-        String DisplayName = name;
-        String MobileNumber = tel;
-        //String HomeNumber = "1111";
-        //String WorkNumber = "2222";
-        String emailID = mail;
-        //String company = "bad";
-        //String jobTitle = "abcd";
-
-        ArrayList < ContentProviderOperation > ops = new ArrayList < ContentProviderOperation > ();
-
-        ops.add(ContentProviderOperation.newInsert(
-                ContactsContract.RawContacts.CONTENT_URI)
-                .withValue(ContactsContract.RawContacts.ACCOUNT_TYPE, null)
-                .withValue(ContactsContract.RawContacts.ACCOUNT_NAME, null)
-                .build());
-
-        //------------------------------------------------------ Names
-        if (DisplayName != null) {
-            ops.add(ContentProviderOperation.newInsert(
-                    ContactsContract.Data.CONTENT_URI)
-                    .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
-                    .withValue(ContactsContract.Data.MIMETYPE,
-                            ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE)
-                    .withValue(
-                            ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME,
-                            DisplayName).build());
-        }
-
-        //------------------------------------------------------ Mobile Number
-        if (MobileNumber != null) {
-            ops.add(ContentProviderOperation.
-                    newInsert(ContactsContract.Data.CONTENT_URI)
-                    .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
-                    .withValue(ContactsContract.Data.MIMETYPE,
-                            ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)
-                    .withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, MobileNumber)
-                    .withValue(ContactsContract.CommonDataKinds.Phone.TYPE,
-                            ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE)
-                    .build());
-        }
-
-//        //------------------------------------------------------ Home Numbers
-//        if (HomeNumber != null) {
-//            ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
-//                    .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
-//                    .withValue(ContactsContract.Data.MIMETYPE,
-//                            ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)
-//                    .withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, HomeNumber)
-//                    .withValue(ContactsContract.CommonDataKinds.Phone.TYPE,
-//                            ContactsContract.CommonDataKinds.Phone.TYPE_HOME)
-//                    .build());
-//        }
-
-//        //------------------------------------------------------ Work Numbers
-//        if (WorkNumber != null) {
-//            ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
-//                    .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
-//                    .withValue(ContactsContract.Data.MIMETYPE,
-//                            ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)
-//                    .withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, WorkNumber)
-//                    .withValue(ContactsContract.CommonDataKinds.Phone.TYPE,
-//                            ContactsContract.CommonDataKinds.Phone.TYPE_WORK)
-//                    .build());
-//        }
-
-        //------------------------------------------------------ Email
-        if (emailID != null) {
-            ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
-                    .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
-                    .withValue(ContactsContract.Data.MIMETYPE,
-                            ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE)
-                    .withValue(ContactsContract.CommonDataKinds.Email.DATA, emailID)
-                    .withValue(ContactsContract.CommonDataKinds.Email.TYPE, ContactsContract.CommonDataKinds.Email.TYPE_WORK)
-                    .build());
-        }
-
-//        //------------------------------------------------------ Organization
-//        if (!company.equals("") && !jobTitle.equals("")) {
-//            ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
-//                    .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
-//                    .withValue(ContactsContract.Data.MIMETYPE,
-//                            ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE)
-//                    .withValue(ContactsContract.CommonDataKinds.Organization.COMPANY, company)
-//                    .withValue(ContactsContract.CommonDataKinds.Organization.TYPE, ContactsContract.CommonDataKinds.Organization.TYPE_WORK)
-//                    .withValue(ContactsContract.CommonDataKinds.Organization.TITLE, jobTitle)
-//                    .withValue(ContactsContract.CommonDataKinds.Organization.TYPE, ContactsContract.CommonDataKinds.Organization.TYPE_WORK)
-//                    .build());
-//        }
-
-        // Asking the Contact provider to create a new contact
-        try {
-            getActivity().getContentResolver().applyBatch(ContactsContract.AUTHORITY, ops);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(getActivity(), "Exception: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
     }
-
-}
