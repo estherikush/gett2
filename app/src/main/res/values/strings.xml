@@ -25,5 +25,6 @@
     <string name="BUTTON_CLOSE">Close</string>
     <string name="addContact">ADD TO CONTACTS</string>
     <string name="CLAIMED">You took the ride</string>
+    <string name="GettTaxi">GettTaxi</string>
 
 </resources>

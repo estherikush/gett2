@@ -42,6 +42,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -56,6 +57,8 @@ import com.example.esthere.gett2.model.entities.Ride;
 import com.example.esthere.gett2.utils.ContentProvider;
 import com.example.esthere.gett2.utils.Dialogs;
 import com.example.esthere.gett2.utils.ManageLocation;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -88,11 +91,11 @@ public class AvaliableRides extends Fragment {
                                     if (convertView == null)
                                         convertView = View.inflate(getActivity(), R.layout.ride, null);
 
-                                    final EditText name = (EditText) convertView.findViewById(R.id.name);
-                                    final EditText tel = (EditText) convertView.findViewById(R.id.tel);
-                                    final EditText email = (EditText) convertView.findViewById(R.id.email);
-                                    EditText source = (EditText) convertView.findViewById(R.id.source);
-                                    EditText target = (EditText) convertView.findViewById(R.id.target);
+                                    final TextView name = (TextView) convertView.findViewById(R.id.name);
+                                    final TextView tel = (TextView) convertView.findViewById(R.id.tel);
+                                    final TextView email = (TextView) convertView.findViewById(R.id.email);
+                                    TextView source = (TextView) convertView.findViewById(R.id.source);
+                                    TextView target = (TextView) convertView.findViewById(R.id.target);
                                     final Button claim = (Button) convertView.findViewById(R.id.claim);
                                     Button unclaim = (Button) convertView.findViewById(R.id.unclaim);
                                     //!!!!!!!!!!!!!!!!!!!

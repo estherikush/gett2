@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.esthere.gett2.R;
 import com.example.esthere.gett2.model.backend.IAction;
@@ -55,11 +56,11 @@ public class MyRides extends Fragment {
                         if (convertView == null)
                             convertView = View.inflate(getActivity(),R.layout.ride,null);
 
-                        final EditText email = (EditText) convertView.findViewById(R.id.email);
-                        final EditText name = (EditText) convertView.findViewById(R.id.name);
-                        final EditText tel = (EditText) convertView.findViewById(R.id.tel);
-                        EditText source = (EditText) convertView.findViewById(R.id.source);
-                        EditText target = (EditText) convertView.findViewById(R.id.target);
+                        final TextView email = (TextView) convertView.findViewById(R.id.email);
+                        final TextView name = (TextView) convertView.findViewById(R.id.name);
+                        final TextView tel = (TextView) convertView.findViewById(R.id.tel);
+                        TextView source = (TextView) convertView.findViewById(R.id.source);
+                        TextView target = (TextView) convertView.findViewById(R.id.target);
 
                         Button claim = (Button) convertView.findViewById(R.id.claim);
                         Button unclaim = (Button) convertView.findViewById(R.id.unclaim);

@@ -6,11 +6,11 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_avaliable_rides"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_directions_car_black_24dp"
             android:title="@string/avaliable_rides" />
         <item
             android:id="@+id/nav_my_rides"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_person_black_24dp"
             android:title="@string/my_rides" />
     </group>
 
@@ -20,14 +20,14 @@
                 android:id="@+id/nav_logout"
                 android:icon="@android:drawable/stat_sys_upload_done"
                 android:title="@string/logout" />
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="@string/share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="@string/send" />
+            <!--<item-->
+                <!--android:id="@+id/nav_share"-->
+                <!--android:icon="@drawable/ic_menu_share"-->
+                <!--android:title="@string/share" />-->
+            <!--<item-->
+                <!--android:id="@+id/nav_send"-->
+                <!--android:icon="@drawable/ic_menu_send"-->
+                <!--android:title="@string/send" />-->
         </menu>
     </item>
 
